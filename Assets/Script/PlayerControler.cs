@@ -5,10 +5,19 @@ using UnityEngine;
 public class PlayerControler : MonoBehaviour
 {
 
-    private Rigidbody2D rb; 
+
+    private Rigidbody2D rb;
+    private Vector2 direccion;
+
+    [Header("Estadisticas")]
     public float velocidadDeMovimiento = 10;
     public float fuerzaDeSalto = 5;
-    private Vector2 direccion; 
+
+    [Header("Booleanos")]
+    public bool puedeMover = true;
+
+
+   
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -27,12 +36,21 @@ public class PlayerControler : MonoBehaviour
 
     }
     private void caminar(Vector2 direccion) {
-        rb.velocity = new Vector2(direccion.x * velocidadDeMovimiento, rb.velocity.y);
+        if (puedeMover) {
+            rb.velocity = new Vector2(direccion.x * velocidadDeMovimiento, rb.velocity.y);
+
+            //verificamos la direccion para poder voltear al personaje.
+            if (direccion != Vector2.zero) {
+                if (direccion.x < 0 && transform.localScale.x > 0) {
+                    transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+                } else if (direccion.x > 0  && transform.localScale.x < 0) {
+
+                    transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
+                }
+            }
+        }
     }
-    private void Saltar() {
-        rb.velocity = new Vector2(rb.velocity.x, 0);
-        rb.velocity += Vector2.up * fuerzaDeSalto;
-    }
+    
     private void mejorarSalto() {
         if (rb.velocity.y < 0)
         {
@@ -48,7 +66,11 @@ public class PlayerControler : MonoBehaviour
             rb.velocity += Vector2.up * Physics2D.gravity.y * (2.0f - 1) * Time.deltaTime;
         }
     }
-
+    private void Saltar()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, 0);
+        rb.velocity += Vector2.up * fuerzaDeSalto;
+    }
 
     // Start is called before the first frame update
     void Start()
