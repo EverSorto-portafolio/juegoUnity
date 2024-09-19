@@ -15,9 +15,21 @@ public class PlayerControler : MonoBehaviour
 
     [Header("Booleanos")]
     public bool puedeMover = true;
+    public bool enSuelo = true;
+
+    [Header("Colisiones")]
+    public Vector2 abajo;
+    public float radioColision;
+    public LayerMask layerPiso;
+
+    private void Agarres() {
+        enSuelo = Physics2D.OverlapCircle((Vector2)transform.position + abajo, radioColision, layerPiso);
+    }
 
 
-   
+
+
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -31,9 +43,11 @@ public class PlayerControler : MonoBehaviour
         //detectamos si camina 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Saltar();
+            if (enSuelo)
+            {
+                Saltar();
+            }   
         }
-
     }
     private void caminar(Vector2 direccion) {
         if (puedeMover) {
@@ -57,12 +71,7 @@ public class PlayerControler : MonoBehaviour
 
             rb.velocity += Vector2.up * Physics2D.gravity.y * (2.5f - 1) * Time.deltaTime;
         }
-        else  if(
-            rb.velocity.y > 0
-            && 
-            !Input.GetKeyDown(KeyCode.Space)
-            
-            ){
+        else  if(rb.velocity.y > 0  && !Input.GetKeyDown(KeyCode.Space)){
             rb.velocity += Vector2.up * Physics2D.gravity.y * (2.0f - 1) * Time.deltaTime;
         }
     }
@@ -82,5 +91,6 @@ public class PlayerControler : MonoBehaviour
     void Update()
     {
         MoviMiento();
+        Agarres();
     }
 }

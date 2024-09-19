@@ -287,7 +287,7 @@ Transform:
   m_GameObject: {fileID: 268772908}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.36, y: -0.26, z: 0}
+  m_LocalPosition: {x: 5.36, y: -0.23, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -306,6 +306,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocidadDeMovimiento: 10
+  fuerzaDeSalto: 5
+  puedeMover: 1
+  enSuelo: 1
+  abajo: {x: 0, y: -0.8}
+  radioColision: 0.1
+  layerPiso:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!50 &268772912
 Rigidbody2D:
   serializedVersion: 4
@@ -1559,7 +1567,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1491872727}
   - component: {fileID: 1491872726}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1606,7 +1614,7 @@ GameObject:
   - component: {fileID: 1495113939}
   - component: {fileID: 1495113938}
   - component: {fileID: 1495113937}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
